@@ -22,6 +22,17 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
+    - name: Check current directory and list files
+      run: |
+        echo "Current working directory:"
+        pwd
+        echo "--------------------------------"
+        echo "Files and folders here:"
+        ls -la
+        echo "--------------------------------"
+        echo "Contents of app folder (if exists):"
+        ls -la app || echo "app folder not found"
+
   security-check:          # 👈🏽 the 2nd Job
     runs-on: ubuntu-latest
     needs: build
@@ -45,6 +56,16 @@ jobs:
 
     - name: gitleaks code scan
       run: gitleaks detect source . -r gitleaks-report.json -f json
+    - name: Check current directory and list files
+      run: |
+        echo "Current working directory:"
+        pwd
+        echo "--------------------------------"
+        echo "Files and folders here:"
+        ls -la
+        echo "--------------------------------"
+        echo "Contents of app folder (if exists):"
+        ls -la app || echo "app folder not found"
 
   test:    # 👈🏽 here comes the 3rd job
     runs-on: ubuntu-latest
@@ -109,6 +130,17 @@ jobs:
     
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
+    
+    - name: Check current directory and list files
+      run: |
+        echo "Current working directory:"
+        pwd
+        echo "--------------------------------"
+        echo "Files and folders here:"
+        ls -la
+        echo "--------------------------------"
+        echo "Contents of app folder (if exists):"
+        ls -la app || echo "app folder not found"
     
     - name: Build and push
       uses: docker/build-push-action@v6
