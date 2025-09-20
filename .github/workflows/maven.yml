@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build:        # 👈🏽 the 1st job
 
     runs-on: ubuntu-latest
 
@@ -22,7 +22,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-  security-check:
+  security-check:          # 👈🏽 the 2nd Job
     runs-on: ubuntu-latest
 
     steps:
@@ -44,6 +44,24 @@ jobs:
 
     - name: gitleaks code scan
       run: gitleaks detect source . -r gitleaks-report.json -f json
+
+  test:    # 👈🏽 here comes the 3rd job
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    
+    - name: Unit test cases
+      run: mvn test
+
+    
 
       
 
