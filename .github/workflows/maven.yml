@@ -87,7 +87,7 @@ jobs:
 
   builds_docker_image_and_push:
     runs-on: ubuntu-latest
-    needs: test
+    needs: builds_project
     steps: 
 
     - uses: actions/checkout@v4
